@@ -5,6 +5,11 @@ on: push
 jobs:
   game-of-life-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false  # Esto permite que todos los jobs terminen, aunque uno falle
+      matrix:
+        java: [ '17', '21' ]  # Define las versiones de Java que queremos probar
+
     steps:
       - name: Setup Maven
         uses: stCarolas/setup-maven@v5
@@ -14,7 +19,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{ matrix.java }}
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Java version
