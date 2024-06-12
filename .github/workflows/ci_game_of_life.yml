@@ -4,11 +4,12 @@ on: push
 
 jobs:
   game-of-life-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false  # Esto permite que todos los jobs terminen, aunque uno falle
+      fail-fast: false  # Configuración para seguir ejecutando otros jobs incluso si uno falla
       matrix:
-        java: [ '17', '21' ]  # Define las versiones de Java que queremos probar
+        java: ['17', '21']
+        os: [ubuntu-latest, windows-latest]  # Definimos los sistemas operativos
 
     steps:
       - name: Setup Maven
@@ -28,4 +29,5 @@ jobs:
         run: mvn --version
       - name: Maven test
         run: mvn test
+
 
